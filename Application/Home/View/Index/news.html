@@ -1,0 +1,104 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<title>mt</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+<link href="{:C('PLUGIN_PATH')}/layui/css/layui.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="{:C('INDEX_CSS_PATH')}/reset.css">
+<link type="text/css" rel="stylesheet" href="{:C('INDEX_CSS_PATH')}/style.css">
+<script type="text/javascript" src="{:C('INDEX_JS_PATH')}/jquery-1.8.3.min.js"></script>
+<script src="{:C('PLUGIN_PATH')}/layui/layui.js"></script>
+<style type="text/css">
+	.layui-laypage button{
+		color: #fff;
+		background-color:#409eff;
+		border:1px solid #409eff;
+	}
+</style>
+</head>
+<body id="news">
+<div class="header">
+	<div class="hInner clearfix">
+		<div class="logo"><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/logo.png" alt=""></a></div>
+		<ul class="clearfix">
+			<li><a href="__CONTROLLER__/index">首页</a></li>
+			<li><a class="on" href="__CONTROLLER__/news">新闻公告</a></li>
+			<li><a href="__CONTROLLER__/courier">物流查询</a></li>
+			<li><a href="#">明通驿站</a></li>
+			<li><a href="__CONTROLLER__/upload">身份证上传</a></li>
+			<li><a href="__CONTROLLER__/claim_provision">理赔条款</a></li>
+			<li><a href="__CONTROLLER__/shipping_instructions">发货说明</a></li>
+			<li><a href="__CONTROLLER__/aboutus">关于我们</a></li>
+		</ul>
+	</div>
+</div>
+
+<div class="topBanner"><img src="{:C('INDEX_IMAGE_PATH')}/newsbanner.jpg" alt=""></div>
+<div id="main">
+	<div class="wrap">
+		<p class="topTxt">首页 → 新闻列表</p>
+		<div class="section">
+		<ul class="newsList">
+			<if condition="$data && $data['DataBody']">
+                <foreach name="data.DataBody" item="v" >
+                    <li><a href="__CONTROLLER__/newsDetail&nid={$v.NewId}">{$v.NewTitle}</a><span>[{$v.NewCreateTime}]</span></li>
+                </foreach>
+            <else/>
+                <li style="text-align: center;">暂无新闻资讯!</li>
+            </if>
+		</ul>
+		<div class="page" id="page"></div>
+		</div>
+	</div>
+</div>
+<include file="Index/footer_common"/>
+</body>
+<script type="text/javascript">
+$(function(){
+	$('#main .navi').click(function(){
+		$(this).toggleClass('on');
+		$('#main .naviBox').toggleClass('show');
+	});
+
+	$('#main .naviBox .navi').click(function(){
+		$('#main .naviBox .subBox').toggleClass('show');
+	});
+	$('#main .naviBox .subBox li').hover(function(){
+		$(this).addClass('hover').siblings('li').removeClass('hover');
+	});
+	$('#main .naviBox .subBox li').click(function(){
+		var txt = $(this).text();
+		$(this).addClass('on').siblings('li').removeClass('on');
+		$('#main .naviBox .navi').text(txt);
+		$('#main .naviBox .subBox').removeClass('show');
+	});
+});
+layui.use('laypage', function(){
+  var laypage = layui.laypage;
+  //执行一个laypage实例
+  laypage.render({
+    elem: 'page',
+    count: '{$data.TotalRecords}',
+    limit: '{$pageSize}',
+    limits: [10, 20, 30, 40, 50],
+    first: '首页',
+    last: '尾页',
+    layout: ['prev','page','next','limit','skip','count'],
+    curr: '{$pageIndex}',
+    prev: '<img src="{:C("INDEX_IMAGE_PATH")}/prev.png" alt="">',
+    next: '<img src="{:C("INDEX_IMAGE_PATH")}/next.png" alt="">',
+    jump: function(obj, first){
+        if(!first){
+          window.location.href = '__ACTION__&pageIndex='+(obj.curr-1)+'&pageSize='+obj.limit;
+        }
+      }
+  });
+});
+</script>
+</html>

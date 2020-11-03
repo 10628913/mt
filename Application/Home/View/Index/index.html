@@ -1,0 +1,129 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<title>mt</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+<link href="{:C('PLUGIN_PATH')}/layui/css/layui.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="{:C('INDEX_CSS_PATH')}/reset.css">
+<link type="text/css" rel="stylesheet" href="{:C('INDEX_CSS_PATH')}/style.css">
+<link type="text/css" rel="stylesheet" href="{:C('INDEX_CSS_PATH')}/slick.css">
+<script type="text/javascript" src="{:C('INDEX_JS_PATH')}/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="{:C('INDEX_JS_PATH')}/slick.js"></script>
+<script src="{:C('PLUGIN_PATH')}/layui/layui.js"></script>
+</head>
+<body id="index">
+<div class="header">
+	<div class="hInner clearfix">
+		<div class="logo"><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/logo.png" alt=""></a></div>
+		<ul class="clearfix">
+			<li><a class="on" href="__CONTROLLER__/index">首页</a></li>
+			<li><a href="__CONTROLLER__/news">新闻公告</a></li>
+			<li><a href="__CONTROLLER__/courier">物流查询</a></li>
+			<li><a href="#">明通驿站</a></li>
+			<li><a href="__CONTROLLER__/upload">身份证上传</a></li>
+			<li><a href="__CONTROLLER__/claim_provision">理赔条款</a></li>
+			<li><a href="__CONTROLLER__/shipping_instructions">发货说明</a></li>
+			<li><a href="__CONTROLLER__/aboutus">关于我们</a></li>
+		</ul>
+	</div>
+</div>
+<div id="main">
+	<div class="bannerBox">
+		<div class="slider">
+			<div class="banner"></div>
+			<div class="banner banner02"></div>
+			<div class="banner banner03"></div>
+			<div class="banner banner04"></div>
+		</div>
+	</div>
+	<div class="searchBox">
+		<div class="search clearfix">
+			<p><img src="{:C('INDEX_IMAGE_PATH')}/search.png" alt="">单号查询</p>
+			<input type="text" placeholder="请输入明通国际速单号" id="order_sn"><a href="javascript:;" onclick="fnSubQuery()">查询</a>
+		</div>
+	</div>
+	<div class="section01">
+		<div class="wrap">
+			<h2><span>为什么选择明通国际速递</span>了解掌握国际速递</h2>
+			<ul class="clearfix">
+				<li><img src="{:C('INDEX_IMAGE_PATH')}/img01.png" alt=""><span>时效可靠</span>每日多仓库，多个航班<br>
+	多个清关口岸发货</li>
+				<li><img src="{:C('INDEX_IMAGE_PATH')}/img02.png" alt=""><span>4PL服务商</span>专业可靠的仓储服务<br>
+	高效稳定的物流配送</li>
+				<li><img src="{:C('INDEX_IMAGE_PATH')}/img03.png" alt=""><span>API支持</span>系统完全自主研发，提供物流订单<br>
+	身份证验证，智能地址解释等接口</li>
+				<li><img src="{:C('INDEX_IMAGE_PATH')}/img04.png" alt=""><span>下载APP</span>下载国际速递APP<br>
+	轻松下单，轻松寄件</li>
+			</ul>
+		</div>
+	</div>
+	<div class="section02">
+		<div class="wrap">
+			<h2><span>新闻动态</span>及时掌握明通国际速递最新动态</h2>
+			<ul class="clearfix">
+				<if condition="$data && $data['DataBody']">
+	                <foreach name="data.DataBody" item="v" >
+	                    <li><a href="__CONTROLLER__/newsDetail&nid={$v.NewId}">{$v.NewTitle}</a><span>[{$v.NewCreateTime}]</span></li>
+	                </foreach>
+	            <else/>
+	                <li style="text-align: center;">暂无新闻资讯!</li>
+	            </if>
+			</ul>
+		</div>
+	</div>
+	<div class="section03">
+		<div class="wrap">
+			<h2><span>合作伙伴</span>携手合作伙伴,共同发展</h2>
+			<ul class="clearfix">
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner01.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner02.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner03.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner04.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner05.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner06.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner07.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner08.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner09.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner10.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner11.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner12.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner13.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner14.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner15.jpg" alt=""></a></li>
+				<li><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/partner16.jpg" alt=""></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<include file="Index/footer_common"/>
+</body>
+<script>
+let layer;
+$(function(){
+	layui.use('layer', function(){
+      layer = layui.layer;
+    });
+	$('.bannerBox .slider').slick({
+		autoplay: true,
+		arrows: false,
+		dots: true
+	});
+});
+
+function fnSubQuery() {
+  let sn = $('#order_sn').val();
+  if(!sn){
+    layer.msg('请输入明通国际速单号!',{icon:5});
+    return false;
+  }
+  layer.load();
+  window.location.href = '__CONTROLLER__/courier&sn='+sn;
+}
+</script>
+</html>

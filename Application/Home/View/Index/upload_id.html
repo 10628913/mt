@@ -1,0 +1,225 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<title>mt</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+<link type="text/css" rel="stylesheet" href="{:C('INDEX_CSS_PATH')}/reset.css">
+<link type="text/css" rel="stylesheet" href="{:C('INDEX_CSS_PATH')}/style.css">
+<link href="{:C('PLUGIN_PATH')}/layui/css/layui.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{:C('INDEX_JS_PATH')}/jquery-1.8.3.min.js"></script>
+<script src="{:C('PLUGIN_PATH')}/layui/layui.all.js"></script>
+<script type="text/javascript" src="{:C('INDEX_JS_PATH')}/ajaxupload.js"></script>
+<script type="text/javascript" src="{:C('INDEX_JS_PATH')}/jquery.validate.min.js"></script>
+</head>
+<body id="upload">
+<div class="header">
+	<div class="hInner clearfix">
+		<div class="logo"><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/logo.png" alt=""></a></div>
+		<ul class="clearfix">
+			<li><a href="__CONTROLLER__/index">首页</a></li>
+			<li><a href="__CONTROLLER__/news">新闻公告</a></li>
+			<li><a href="__CONTROLLER__/courier">物流查询</a></li>
+			<li><a href="#">明通驿站</a></li>
+			<li><a class="on" href="__CONTROLLER__/upload">身份证上传</a></li>
+			<li><a href="__CONTROLLER__/claim_provision">理赔条款</a></li>
+			<li><a href="__CONTROLLER__/shipping_instructions">发货说明</a></li>
+			<li><a href="__CONTROLLER__/aboutus">关于我们</a></li>
+		</ul>
+	</div>
+</div>
+<div class="noteBox clearfix" style="display: none;">
+	<img class="error" src="{:C('INDEX_IMAGE_PATH')}/error.png" alt="">
+	<span class="txt"><span>提示</span>身份证OCR识别失败</span>
+	<img class="close" onclick="$(this).parent().fadeOut();" src="{:C('INDEX_IMAGE_PATH')}/close.png" alt="">
+</div>
+<div id="main">
+	<div class="wrap">
+		<p class="topTxt">首页 → 身份证上传</p>
+		<div class="section">
+			<p class="comTtl"><span>▍</span>入境国际快件报关报检委托 </p>
+			<ul class="txtBox">
+				<li>1. 海关清关入境包裹，请配合提交收件人身份证明</li>
+<li>2. 根据中国海关总署修订后的《中华人民共和国海关对进出境快件监管办法》，入境到中国大陆的个人包裹经海关查验需向海关提供收件人身份证印件等相关信息。</li>
+<li>3. 明通国际速递承诺所有信息均提交给海关清关时进行查验，绝不用做其它途径</li>
+			</ul>
+			<p class="comTtl"><span>▍</span>上传身份证</p>
+			<ul class="step clearfix">
+				<li><div class="txt"><img src="{:C('INDEX_IMAGE_PATH')}/upload_img01.png" alt=""><span>1、先输入包裹运单号，或者输入手机号</span></div><div class="arrow"><div class="arrow2"></div></div></li>
+				<li><div class="txt"><img src="{:C('INDEX_IMAGE_PATH')}/upload_img02.png" alt=""><span>2、上传身份证图片，姓名和身份证号码会自动识别</span></div><div class="arrow"><div class="arrow2"></div></div></li>
+				<li><div class="txt"><img src="{:C('INDEX_IMAGE_PATH')}/upload_img03.png" alt=""><span>3、正确识别身份证号码和姓名后，按提交按钮</span></div><div class="arrow"><div class="arrow2"></div></div></li>
+			</ul>
+			<div class="inner">
+				<ul class="tabNavi clearfix">
+					<li class="on" type="1"><a href="#">用运单号上传</a></li>
+					<li type="2"><a href="#">用手机号上传</a></li>
+				</ul>
+				<div class="tabPanel">
+					<form id="form" method="post" >
+						<dl class="clearfix">
+							<div class="submitItem">
+								<dt><span>*</span>请输入明通运单号</dt>
+							<dd><input type="text" name="SorWaybillNo"><span class="errorTxt">请输入明通运单号</span></dd>
+							</div>
+							<div  class="submitItem" style="display: none">
+								<dt><span>*</span>请输入手机号</dt>
+								<dd><input type="text" name="SorReceiverMobile"><span class="errorTxt">请输入手机号</span></dd>
+							</div>
+							<dt><span>*</span>收件人身份证姓名</dt>
+							<dd><input type="text" placeholder="无法填写,上传身份证正面后自动识别" name="SorReceiverName" readonly><span class="errorTxt">请上传身份证正面自动识别</span></dd>
+							<dt><span>*</span>收件人身份证号码</dt>
+							<dd><input type="text" placeholder="无法填写,上传身份证正面后自动识别" name="SorReceiverCardNo" readonly><span class="errorTxt">请上传身份证正面自动识别</span></dd>
+							<dt><span>*</span>请上传身份证</dt>
+							<dd>
+								<ul class="clearfix">
+									<li id="img1"><input type="hidden" name="idcard1"/><img src="{:C('INDEX_IMAGE_PATH')}/upload_img04.png" alt=""><span>点击上传身份证正面照</span><span class="cover"><span class="up"><img src="{:C('INDEX_IMAGE_PATH')}/upload_img06.png" alt=""></span></span><span class="errorTxt">请上传身份证正面</span></li>
+									<li id="img2"><input type="hidden" name="idcard2"/><img src="{:C('INDEX_IMAGE_PATH')}/upload_img05.png" alt=""><span>点击上传身份证背面照</span><span class="cover"><span class="up"><img src="{:C('INDEX_IMAGE_PATH')}/upload_img06.png" alt=""></span></span><span class="errorTxt">请上传身份证背面</span></li>
+								</ul>
+							</dd>
+						</dl>
+						<p class="note">注意：上传身份证图片只支持jpg,jpeg,png,bmp格式,图片大小小于2M </p>
+						<div class="submit">
+							<button type="submit">提 交</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="Index/footer_common"/>
+</body>
+<script>
+let layer = layui.layer;
+$(function(){
+	$('#main .tabPanel').hide();
+	$('#main .tabPanel').eq(0).show();
+
+	$('#main .tabNavi li a').click(function(){
+		var ind=$(this).parent('li').index();
+		$(this).parent('li').addClass('on').siblings().removeClass('on');
+		$('#main .submitItem').hide();
+		$('#main .submitItem:eq('+ind+')').show();
+		return false;
+	});
+
+	 var uploadOption = {
+         // 提交目标
+         action: "__APP__/Upload/uploadImg",
+         // 服务端接收的名称
+         name: "file",
+         // 自动提交
+         autoSubmit: true,
+         // 选择文件之后…
+         onChange: function (file, extension) {
+             if (new RegExp(/(jpg)|(jpeg)|(bmp)|(png)/i).test(extension)) {
+             } else {
+                 layer.msg('只限上传jpg,jpeg,bmp,png文件，请重新选择！',{icon:0});
+             }
+         },
+         // 开始上传文件
+         onSubmit: function (file, extension) {
+             layer.load();
+         },
+         // 上传完成之后
+         onComplete: function (file, response) {
+            layer.closeAll('loading');
+            let ret = typeof(response) == 'object' ? response : JSON.parse(response);
+            if(ret.status == 1){
+              let data = ret.data;
+              if(data.url){
+                if(data.name){
+                  $('input[name="SorReceiverName"]').val(data.name);
+                }
+                if(data.cardno){
+                  $('input[name="SorReceiverCardNo"]').val(data.cardno);
+                }
+                let item = $(this._button).find('img');
+                $(item[0]).attr('src',data.url);
+                $(this._button).find('input').val(data.url);
+
+              }else{
+              	let item = $(this._button).find('img');
+                $(item[0]).attr('src',ret.data);
+             	$(this._button).find('input').val(ret.data);
+              }
+            }else{
+            	$('.noteBox .txt').html('<span>提示</span>'+ret.info);
+                $('.noteBox').fadeIn();
+            }
+
+        }
+    };
+    uploadOption.action = '__APP__/Upload/uploadCardFace';
+    new AjaxUpload($('#img1'), uploadOption);
+    uploadOption.action = '__APP__/Upload/uploadCardBack';
+    new AjaxUpload($('#img2'), uploadOption);
+
+});
+let postStatus = true;
+ $("form").validate({
+  submitHandler: function(form)
+    {
+    	if(!postStatus){
+	       return;
+	    }
+    	let swicthType = $('.tabNavi .on').attr('type');
+    	if(swicthType == 1){
+    		if(!errorShow(form.SorWaybillNo.value,'SorWaybillNo')){
+    			return false;
+    		}
+    	}else{
+    		if(!errorShow(form.SorReceiverMobile.value,'SorReceiverMobile')){
+    			return false;
+    		}
+    	}
+
+    	if(!errorShow(form.SorReceiverName.value,'SorReceiverName')){
+			return false;
+		}
+		if(!errorShow(form.SorReceiverCardNo.value,'SorReceiverCardNo')){
+			return false;
+		}
+		if(!errorShow(form.idcard1.value,'idcard1')){
+			return false;
+		}
+		if(!errorShow(form.idcard2.value,'idcard2')){
+			return false;
+		}
+
+   		postStatus = false;
+    	 let index = layer.load();
+	     $.post('__ACTION__',$('form').serialize()+'&type='+swicthType,function(ret){
+	         postStatus = true;
+	           layer.close(index);
+	           if(ret.status == 1){
+	               layer.msg(ret.info,{icon:1},function(){
+	                   window.location.reload();
+	               });
+	           }else{
+	               layer.msg(ret.info,{icon:0});
+	           }
+
+	     }).error(function(xhr,errorText,errorType){
+	       });
+    }
+  });
+function errorShow(data,name){
+	let item = $('input[name="'+name+'"]');
+	if(data){
+		$(item).removeClass('error');
+		$(item).parent().find('.errorTxt').fadeOut();
+		return true;
+	}else{
+		$(item).addClass('error');
+		$(item).parent().find('.errorTxt').fadeIn();
+		return false;
+	}
+}
+</script>
+</html>

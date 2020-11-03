@@ -1,0 +1,139 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<title>mt</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+<link type="text/css" rel="stylesheet" href="{:C('INDEX_CSS_PATH')}/reset.css">
+<link type="text/css" rel="stylesheet" href="{:C('INDEX_CSS_PATH')}/style.css">
+<script type="text/javascript" src="{:C('INDEX_JS_PATH')}/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="{:C('INDEX_JS_PATH')}/doT.min.js"></script>
+<link href="{:C('PLUGIN_PATH')}/layui/css/layui.css" rel="stylesheet" type="text/css">
+<script src="{:C('PLUGIN_PATH')}/layui/layui.all.js"></script>
+</head>
+<body id="courier">
+<div class="header">
+	<div class="hInner clearfix">
+		<div class="logo"><a href="#"><img src="{:C('INDEX_IMAGE_PATH')}/logo.png" alt=""></a></div>
+		<ul class="clearfix">
+			<li><a href="__CONTROLLER__/index">首页</a></li>
+			<li><a href="__CONTROLLER__/news">新闻公告</a></li>
+			<li><a class="on" href="__CONTROLLER__/courier">物流查询</a></li>
+			<li><a href="#">明通驿站</a></li>
+			<li><a href="__CONTROLLER__/upload">身份证上传</a></li>
+			<li><a href="__CONTROLLER__/claim_provision">理赔条款</a></li>
+			<li><a href="__CONTROLLER__/shipping_instructions">发货说明</a></li>
+			<li><a href="__CONTROLLER__/aboutus">关于我们</a></li>
+		</ul>
+	</div>
+</div>
+<div class="noteBox clearfix" style="display: none;">
+	<img class="error" src="{:C('INDEX_IMAGE_PATH')}/error.png" alt="">
+	<span class="txt"><span>提示</span>快递单号不能为空</span>
+	<img class="close" onclick="$(this).parent().fadeOut();" src="{:C('INDEX_IMAGE_PATH')}/close.png" alt="">
+</div>
+<div id="main">
+	<div class="wrap">
+		<p class="topTxt">首页 → 物流查询</p>
+		<div class="section">
+			<textarea cols="100" rows="5" placeholder="支持多单号查询,一次最多支持10个单号查询,多个单号之间用英⽂逗号分隔">{$sn}</textarea>
+			<div class="btn"><input value="查 询" type="button" onclick="fnDoSearch();"></div>
+			<div class="order">
+				<if condition="$data">
+					<div class="item">
+					<p class="ttl"><span>运单号: {$data.WaybillNo}</span><if condition="$data['GuoneiKdName']"><span>国内派送快递: {$data.GuoneiKdName}</span></if><if condition="$data['GuoneiWaybillNo']"><span>国内派送单号: {$data.GuoneiWaybillNo}</span></if></p>
+					<ul class="clearfix">
+						<foreach name="data.TrackList" item="v" key="k">
+							<li>
+								<p>{$v.Date}</p>
+								<dl class="clearfix">
+									<foreach name="v.EventList" item="z">
+										<dt>{$z.TckTime}</dt>
+										<dd>{$z.TckContext}</dd>
+									</foreach>
+								</dl>
+							</li>
+						</foreach>
+					</ul>
+				</div>
+			    <else/>
+			    	<if condition="$sn">
+			        <tr>
+			            <td style="text-align: center" colspan="100%">{$msg}</td>
+	                </tr>
+	            	</if>
+	            </if>
+	        </div>
+		</div>
+	</div>
+</div>
+<include file="Index/footer_common"/>
+</body>
+<script type="text/javascript">
+	let layer = layui.layer;
+	function fnDoSearch() {
+		let val = $('textarea').val();
+		if(!checkOrderNo(val)){
+			return;
+		}
+
+    let loadId = layer.load();
+    $.post('__ACTION__',{sn: val},function(ret) {
+      layer.close(loadId);
+      if(ret.status == 1){
+          let data = ret.data;
+          let html = '';
+          for(var i in data){
+          	html += '<div class="item">'
+						+'<p class="ttl"><span>运单号: '+data[i].WaybillNo+'</span>';
+						if(data[i].GuoneiKdName){
+							html += '<span>国内派送快递: '+data[i].GuoneiKdName+'</span>';
+						}
+						if(data[i].GuoneiWaybillNo){
+							html += '<span>国内派送单号: '+data[i].GuoneiWaybillNo+'</span>';
+						}
+
+						html += '<ul class="clearfix">';
+						let trackList = data[i].TrackList;
+						for(let j in trackList){
+							html += '<li>'
+									+'<p>'+trackList[j].Date+'</p>'
+									+'<dl class="clearfix">';
+									let eventList = trackList[j].EventList;
+									for(let z in eventList){
+										html += '<dt>'+eventList[z].TckTime+'</dt>'
+										+'<dd>'+eventList[z].TckContext+'</dd>';
+									}
+									html += '</dl>'
+								+'</li>';
+						}
+						html += '</ul>'
+					+'</div>';
+          }
+          $('.order').html(html);
+      }else{
+      	showBox(ret.info);
+      }
+    });
+ }
+
+ function checkOrderNo(str){
+ 	var pattern = new RegExp("[-`~!@#$^&*()=|{}':;'\\[\\].<>《》/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
+    if(pattern.test(str)){
+    	showBox('运单号中不允许有特殊字符!');
+    	return false;
+    }
+	return true;
+ }
+
+ function showBox(msg){
+ 	$('.noteBox .txt').html('<span>提示</span>'+msg);
+    $('.noteBox').fadeIn();
+ }
+</script>
+</html>
