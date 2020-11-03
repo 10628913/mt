@@ -46,7 +46,7 @@
 			<div class="order">
 				<if condition="$data">
 					<div class="item">
-					<p class="ttl"><span>运单号: {$data.WaybillNo}</span><if condition="$data['GuoneiKdName']"><span>国内派送快递: {$data.GuoneiKdName}</span></if><if condition="$data['GuoneiWaybillNo']"><span>国内派送单号: {$data.GuoneiWaybillNo}</span></if></p>
+					<p class="ttl"><span>运单号: {$data.WaybillNo}</span><if condition="$data['GuoneiKdName']"><span class="sp01">国内派送快递: {$data.GuoneiKdName}</span></if><if condition="$data['GuoneiWaybillNo']"><span class="sp02">国内派送单号: {$data.GuoneiWaybillNo}</span></if></p>
 					<ul class="clearfix">
 						<foreach name="data.TrackList" item="v" key="k">
 							<li>
@@ -92,10 +92,10 @@
           	html += '<div class="item">'
 						+'<p class="ttl"><span>运单号: '+data[i].WaybillNo+'</span>';
 						if(data[i].GuoneiKdName){
-							html += '<span>国内派送快递: '+data[i].GuoneiKdName+'</span>';
+							html += '<span class="sp01">国内派送快递: '+data[i].GuoneiKdName+'</span>';
 						}
 						if(data[i].GuoneiWaybillNo){
-							html += '<span>国内派送单号: '+data[i].GuoneiWaybillNo+'</span>';
+							html += '<span class="sp02">国内派送单号: '+data[i].GuoneiWaybillNo+'</span>';
 						}
 
 						html += '<ul class="clearfix">';
